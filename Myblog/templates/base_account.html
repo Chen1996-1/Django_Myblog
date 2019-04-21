@@ -1,0 +1,19 @@
+{% extends 'base_blog.html' %}
+{% load static %}
+
+{% block stylesheet %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/accounts.css' %}">
+{% endblock %}
+
+{% block head %}
+{% endblock %}
+
+{% block body %}
+<div class="container">
+	<h1 class="text-center logo my-4">
+		<a href="{% url 'home_page' %}"><b>Blog</b>&amp;Chen</a>		
+	</h1>
+	{% block form %}
+	{% endblock %}
+	
+{% endblock body %}

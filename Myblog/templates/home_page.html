@@ -1,0 +1,86 @@
+{% extends 'base_blog.html' %}
+
+{% block main %}
+<main class="col-md-8">
+		{% if object_list %}
+		{% for post in object_list %}
+		<article class="post post-1">
+			<ol class="breadcrumb my-4">
+			<header class="entry-header">
+				<h1 class="entry-title">
+					<a >{{ post.title }}</a>
+				</h1>
+				<div class="entry-meta">
+				<span class="post-author"><a href="{% url 'other_account' post.author.id %}">{{ post.author }}</a></span>
+
+				<span class="post-date"><a href="#">{{ post.create_date }}</a></span>
+
+
+				<span class="read-counts"><a href="#">{{ post.views }} reads</a></span>
+				<span class="post-comments-counts"><a href="#">{{ post.get_comments_counts }} comments</a></span>
+				</div>
+			</header>
+			<div class="entry-content clearfix">
+					<p>{{ post.text }}....</p>
+			</div>
+			</ol>
+				<div class="read-more cl-effect-14">
+					<a href="{% url 'post_deteil' post.pk %}" class="more-link">Continue reading <span class="meta-nav">→</span></a>
+				</div>
+		</article>
+		{% endfor %}
+		{% endif %}
+	</main>
+
+{% endblock %}
+
+{% block aside %}
+
+		<aside class="col-md-4">
+			<div class="widget widget-recent-posts">		
+				
+				<h3 class="widget-title">Recent Posts</h3>	
+				<ul>
+					{% for post in get_recent_post_list %}
+					<li>
+						<a href="{% url 'post_deteil' post.pk %}">{{ post.title }}</a>
+					</li>
+					{% endfor %}
+				</ul>
+				
+			</div>
+			<!-- <div class="widget widget-archives">		
+					
+				<h3 class="widget-title">Archives</h3>		
+				<ul>
+					{% for archive in archives %}
+					<li>
+						<a href="#">{{ archive }}</a>
+					</li>
+					{% endfor %}
+					
+				</ul>
+			</div>
+			
+			<div class="widget widget-category">		
+
+				<h3 class="widget-title">Category</h3>		
+				<ul>
+					{% for category_name  in list_category %}
+					<li>
+						<a href="#">{{ category_name }}</a>
+					</li>
+					{% endfor %}
+				</ul>
+			</div> -->
+			
+		</aside>
+		</div>
+		{% endblock %}
+
+{% block footer %}
+<div class="center">
+	
+{% include 'includes/pagination.html' %}
+</div>
+{% endblock %}

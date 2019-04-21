@@ -1,0 +1,17 @@
+{% extends 'base_blog.html' %}
+
+{% block main %}
+
+<ol class="breadcrumb my-4 btn btn-block">
+		
+<li class="breadcrumb-item active btn-block">{{ post.title }}</li>
+
+</ol>
+
+<form method="post" novalidate class="btn btn-block">
+{% csrf_token %}
+
+{% include 'includes/form.html' %}
+<button type="submit" class="btn btn-success">Ok</button>
+</form>
+{% endblock %}

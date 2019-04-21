@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Black &amp; White</title>
+
+		<!-- meta -->
+		<meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1">
+	    <!-- {% load static %} -->
+		<!-- css -->
+		<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+		<link rel="stylesheet" href="{% static 'css/ionicons.min.css' %}">
+		<link rel="stylesheet" href="{% static 'css/pace.css' %}">
+	    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+
+	    <!-- js -->
+	    <script src="{% static 'js/jquery-2.1.3.min.js' %}"></script>
+	    <script src="{% static 'js/pace.min.js' %}"></script>
+	    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+	    <script src="{% static 'js/modernizr.custom.js' %}"></script>
+	    
+	</head>
+
+	<body>
+		{% block header %}
+		<div class="container">	
+			<header id="site-header">
+				<div class="row">
+					<div class="col-md-4 col-sm-5 col-xs-8">
+						<div class="logo">
+							<h1><a href="{% url 'home' %}"><b>Black</b> &amp; White</a></h1>
+						</div>
+					</div><!-- col-md-4 -->
+					<div class="col-md-8 col-sm-7 col-xs-4">
+						<nav class="main-nav" role="navigation">
+							<div class="n avbar-header">
+  								<button type="button" id="trigger-overlay" class="navbar-toggle">
+    								<span class="ion-navicon"></span>
+  								</button>
+							</div>
+									<div class="collapse navbar-collapse" id="mainMenu">
+										{% if user.is_authenticated %}
+										<ul class="navbar-nav ml-auto">
+											<li class="nav-item dropdown">
+												<a class="nav-link dropdown-toggle" href="#" id="userMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+													{{ user.username }}
+												</a>
+													<div class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenu">
+														<a class="dropdown-item" href="{% url 'my_account' %}">My account</a>
+														<a class="dropdown-item" href="{% url 'password_change' %}">Change password</a>
+														<div class="dropdown-divider"></div>
+															<a class="dropdown-item" href="{% url 'logout' %}">Log out</a>
+													</div>
+											</li>
+										</ul>
+										{% else %}
+										<form class="form-inline ml-auto">
+											<a href="{% url 'login' %}" class="btn btn-outline-secondary">Log in</a>
+											<a href="{% url 'signup' %}" class="btn btn-primary ml-2">Sign up</a>
+										</form>
+										{% endif %}
+									</div>
+							<!-- /.navbar-collapse -->
+						</nav>
+						<div id="header-search-box">
+							<a id="search-menu" href="#"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a>
+							<div id="search-form" class="search-form">
+								<form role="search" method="get" id="searchform" action="#">
+									<input type="search" placeholder="Search" required>
+									<button type="submit"><span class="ion-ios-search-strong"></span></button>
+								</form>				
+							</div>
+						</div>
+					</div><!-- col-md-8 -->
+				</div>
+			</header>
+		</div>
+		{% endblock %}
+
+		{% block collect_from %}
+		<div class="copyrights">Collect from <a href="http://www.cssmoban.com/" >网页模板</a></div>
+		{% endblock %}
+		
+		<div class="content-body">
+			<div class="container">
+				<div class="row">
+					{% block main %}
+					<main class="col-md-8">
+					{% for post in post_list_index %}
+						<article class="post post-1">
+							<header class="entry-header">
+								<h1 class="entry-title">
+									<a href="{% url 'single_post' post.id %}">{{ post.title }}</a>
+								</h1>
+								<div class="entry-meta">
+									<span class="post-category"><a href="#">{{ post.category }}</a></span>
+			
+									<span class="post-date"><a href="#"><time class="entry-date" datetime="2012-11-09T23:15:57+00:00">{{ post.creat_time }}</time></a></span>
+			
+									<span class="post-author"><a href="#">{{ post.author }}</a></span>
+			
+									<span class="read-counts"><a href="#">{{ post.reads }} read</a></span>
+								</div>
+							</header>
+							<div class="entry-content clearfix">
+								<p>{{ post.first }}....</p>
+								<div class="read-more cl-effect-14">
+									<a href="{% url 'single_post' post.id %}" class="more-link">Continue reading <span class="meta-nav">→</span></a>
+								</div>
+							</div>
+						</article>
+					{% endfor %}
+					<div class="container">
+						
+						{% include 'page.html' %}
+					</div>
+
+					</main>
+					{% endblock %}
+
+					{% block aside %}
+					<aside class="col-md-4">
+						<div class="widget widget-recent-posts">		
+							
+							<h3 class="widget-title">Recent Posts</h3>	
+							<ul>
+								{% for post_a in post_list_recent %}
+								<li>
+									<a href="{% url 'single_post' post_a.id %}">{{ post_a.title }}</a>
+								</li>
+								{% endfor %}
+							</ul>
+							
+						</div>
+						<div class="widget widget-archives">		
+								
+							<h3 class="widget-title">Archives</h3>		
+							<ul>
+								{% for archive in archives %}
+								<li>
+									<a href="#">{{ archive }}</a>
+								</li>
+								{% endfor %}
+								
+							</ul>
+						</div>
+						
+						<div class="widget widget-category">		
+
+							<h3 class="widget-title">Category</h3>		
+							<ul>
+								{% for category_name  in list_category %}
+								<li>
+									<a href="#">{{ category_name }}</a>
+								</li>
+								{% endfor %}
+							</ul>
+						</div>
+						
+					</aside>
+					{% endblock %}
+
+				</div>
+			</div>
+		</div>
+{% block footer %}
+		<footer id="site-footer">
+			<div class="container">
+				<div class="row">
+					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+						<ul class="nav navbar-nav navbar-right">
+						<li class="cl-effect-11"><a href="{% url 'blog_index' pk=1 %}" data-hover="Home">Home</a></li>
+						<li class="cl-effect-11"><a href="{% url 'blog_list' %}" data-hover="Blog">Blog</a></li>
+						<li class="cl-effect-11"><a href="{% url 'about_me' %}" data-hover="About">About</a></li>
+
+						<li class="cl-effect-11"><a href="{% url 'contact_me' %}" data-hover="Contact">Contact</a></li>
+						<li class="cl-effect-11"><a href="{% url 'add_blog' %}" data-hover="Add">Add</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</footer>
+{% endblock %}
+		<!-- Mobile Menu -->
+{% block last %}
+	
+{% endblock %}
+		<script src="{% static 'js/script.js' %}"></script>
+
+	</body>
+</html>

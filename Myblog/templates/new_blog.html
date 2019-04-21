@@ -1,0 +1,52 @@
+{% extends 'base_blog.html' %}
+{% load  widget_tweaks %}
+{% load static %}
+
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'css/simplemde.min.css' %}">
+{% endblock %}
+
+{% block head %}
+
+	<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+			<div class="container">
+				<a class="navbar-brand" href="{% url 'home_page' %}"><b>Blog</b> &amp; Chen</a>
+				
+			<div class="collapse navbar-collapse" id="mainMenu">
+				{% if user.is_authenticated %}
+				<ul class="navbar-nav ml-auto"></ul>
+				<a class="navbar-brand" href="#">{{ user.username }}</a>
+
+				{% else %}
+				<form class="form-inline ml-auto">
+					<a href="{% url 'login' %}" class="btn btn-outline-secondary">Log in</a>
+					<a href="{% url 'signup' %}" class="btn btn-primary ml-2">Sign up</a>
+				</form>
+				{% endif %}
+			</div>
+			</div>
+	</nav>
+{% endblock %}
+
+{% block main %}
+<ol class="breadcrumb my-4 btn btn-block">
+		
+<li class="breadcrumb-item active btn-block">New Post</li>
+
+</ol>
+
+<form method="post" novalidate class="btn btn-block">
+{% csrf_token %}
+
+{% include 'includes/form.html' %}
+<button type="submit" class="btn btn-success">Save</button>
+</form>
+{% endblock %}
+
+
+{% block javascript %}
+<script src="{% static 'js/simplemde.min.js' %}"></script>
+	<script>
+		var simplemde = new SimpleMDE();
+	</script>
+{% endblock %}

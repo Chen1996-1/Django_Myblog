@@ -1,0 +1,77 @@
+{% extends 'base_blog.html' %}
+{%  load static %}
+
+
+{% block main %}
+
+		
+<main class="col-md-9">	
+	<ol class="breadcrumb my-4 btn btn-block">
+		<li class="breadcrumb-item active btn-block">My Posts</li>
+	</ol>
+	<div class="mb-4">
+		<a href="{% url 'new_blog' %}" class="btn btn-primary">New Post</a>
+	</div>
+	<table class="table">
+		<thead class="thead-inverse">
+			<tr>
+			<th>Title</th>
+			<th>Creat Time</th>
+			
+			<th>Comment Counts</th>
+			<th>Post'Tags</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for post in object_list %}
+				<tr>
+				<td>
+					<a href="#">{{ post.title }}</a>
+					<small class="text-muted d-block">{{ post.create_date }}</small>
+				</td>
+
+				<td class="align-middle">{{ post.create_date }}</td>
+				
+				<td class="align-middle">{{ post.comments.count }}</td>
+				<td class="align-middle">
+					{% if post.tags.count %}
+						{{ post.tags }}
+					{% else %}
+					<small class="text-muted d-block">Not yet a tag</small>
+					{% endif %}
+				</td>
+
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</main>
+{% endblock %}
+
+{% block aside %}
+<aside class="col-md-3">
+<div class="card-body p-5 ">
+	<div class="row">
+		<div class="col-md-6">
+		<img src="{% static 'img/avatar.svg' %}" alt="{{ user.username }}" class="w-100" >
+		<small>{{ user.username }}</small>
+		</div>
+		<div class="col-md-3">
+			<a href=""><strong>Email:</strong>2435740021@qq.com</a>
+		</div>
+		<div class="col-md-9s">
+			<a href="">Blogs <strong>{{ user.posts.count }}</strong></a>
+		</div>
+	</div>
+</div>
+
+</aside>
+
+{% endblock %}
+	</div>
+</div>
+
+{% block footer %}
+<p class="copyright">{% include 'includes/pagination.html' %}</p>
+
+{% endblock %}

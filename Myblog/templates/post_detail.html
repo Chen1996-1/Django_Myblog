@@ -1,0 +1,53 @@
+{% extends 'base_blog.html' %}
+
+{% block bady %}
+
+{% block main %}
+<main class="col-md-8">
+
+	<article class="post post-1">
+		<header class="entry-header">
+			<h1 class="entry-title">{{ post.title }}</h1>
+			<div class="entry-meta">
+				<!-- <span class="post-category"><a href="#">{{ category_name }}</a></span> -->
+
+				<span class="post-author"><a href="{% url 'other_account' post.author.id %}">{{ post.author }}</a></span>
+
+				<span class="post-date"><a href="#">{{ post.create_date }}</a></span>
+
+				<span class="comments-link"><a href="#">{{ post.get_comments_counts }} Comments</a></span>
+				<span class="post-author"><a href="#">{{ post.views }} readed</a></span>
+
+			</div>
+		</header>
+		<div class="entry-content clearfix">
+			{{ post.get_text_as_markdown }}
+		</div>
+	</article>
+
+
+
+	
+</main>
+{% endblock %}
+
+
+{% endblock bady %}
+{% block footer %}
+<div class="container">
+<a href="{% url 'add_comment' post.pk %}" class="btn btn-block btn-light" role="button">Comment</a>
+	<ul class="comment-list list-unstyled">
+	{% for comment in post.get_comments_list %}
+
+<li class="comment-item  btn btn-block">
+    <span class="nickname">{{ comment.author }}</span>
+    <time class="submit-date" datetime="2012-11-09T23:15:57+00:00">{{ comment.create_date }}</time>
+    <div class="text">
+       {{ comment.comment }}
+    </div>
+</li>
+
+	{% endfor %}
+</ul>
+</div>
+{% endblock %}
